@@ -1,0 +1,23 @@
+node_modules/
+dist/
+coverage/
+
+.env
+.env.local
+.env.*.local
+!.env.example
+
+*.log
+npm-debug.log*
+
+.vscode/
+.idea/
+.DS_Store
+
+.cache/
+tmp/
+*.tmp
+
+# Generated render samples and test fixtures (regenerate with npm run render:sample)
+render-samples/
+uploads/

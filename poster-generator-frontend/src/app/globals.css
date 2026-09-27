@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/*
+  A Bangla-first design. Two things matter more than anything else here:
+  the UI font must shape Bangla conjuncts correctly, and it must be present on
+  the client because the whole product is unusable in tofu boxes.
+*/
+@theme inline {
+  --font-sans: var(--font-hind-siliguri), "Noto Sans Bengali", system-ui, sans-serif;
+
+  --color-brand-50: #eefaf4;
+  --color-brand-100: #d5f2e4;
+  --color-brand-200: #ade5cd;
+  --color-brand-300: #78d1af;
+  --color-brand-400: #43b78e;
+  --color-brand-500: #1f9c74;
+  --color-brand-600: #127d5d;
+  --color-brand-700: #0f644c;
+  --color-brand-800: #0f503e;
+  --color-brand-900: #0d4234;
+  --color-brand-950: #04241c;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-neutral-50);
+    color: var(--color-neutral-900);
+    /* Bangla glyphs sit low and have tall marks above; a slightly larger line
+       height keeps matras from being clipped next to Latin. */
+    line-height: 1.6;
+  }
+
+  /* A visible focus ring is required for keyboard users, and :focus-visible
+     keeps it off mouse clicks. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+  }
+}
+
+/*
+  Buttons are declared with `@utility` and each one carries its full base
+  styling. In Tailwind v4, `@apply` only accepts real utilities, so a shared
+  `.btn` base could not be pulled into the variants the way it could in v3.
+*/
+@utility btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold
+         transition disabled:cursor-not-allowed disabled:opacity-60
+         bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900;
+}
+
+@utility btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold
+         transition disabled:cursor-not-allowed disabled:opacity-60
+         border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50;
+}
+
+@utility btn-danger {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold
+         transition disabled:cursor-not-allowed disabled:opacity-60
+         border border-red-300 bg-white text-red-700 hover:bg-red-50;
+}
+
+@layer components {
+  .field-label {
+    @apply block text-sm font-medium text-neutral-700 mb-1.5;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-neutral-900
+           placeholder:text-neutral-400 transition
+           focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 focus:outline-none
+           disabled:bg-neutral-100 disabled:text-neutral-500;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-sm text-red-600;
+  }
+
+  .card {
+    @apply rounded-xl border border-neutral-200 bg-white shadow-sm;
+  }
+}
+
+/* Respect a user's reduced-motion preference: the shimmer on a generating
+   poster is decorative, so it should stop rather than persist. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-spin {
+    animation: none !important;
+  }
+}

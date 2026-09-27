@@ -1,0 +1,61 @@
+{
+  "name": "poster-generator-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the Bangla Political Poster Generator",
+  "main": "dist/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "seed": "ts-node --transpile-only src/templates/seed.ts",
+    "render:sample": "ts-node --transpile-only tests/render.sample.ts",
+    "render:verify": "ts-node --transpile-only tests/render.verify.ts",
+    "verify": "npm run typecheck && npm run test && npm run render:verify"
+  },
+  "keywords": [
+    "poster",
+    "bangla",
+    "gemini",
+    "puppeteer"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.20.1",
+    "multer": "^2.0.2",
+    "puppeteer": "^24.28.0",
+    "sharp": "^0.34.5",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.23",
+    "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.18.11",
+    "@types/supertest": "^6.0.3",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.2.3",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.4",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}

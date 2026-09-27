@@ -1,0 +1,11 @@
+docs/
+PROJECT_SPEC.md
+node_modules/
+dist/
+build/
+.env
+.env.test
+uploads/
+uploads-test/
+render-samples/
+.DS_Store
