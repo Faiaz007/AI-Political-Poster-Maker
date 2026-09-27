@@ -173,7 +173,7 @@ list of problems rather than failing later at the first request.
 | `NODE_ENV` | no | `production` | `development` also returns stack traces to clients. |
 | `JWT_EXPIRES_IN` | no | `7d` | Token lifetime. |
 | `GEMINI_API_KEY` | no | — | Enables AI layouts. Blank or unset → deterministic fallback. |
-| `GEMINI_MODEL` | no | `gemini-3.5-flash-lite` | Must be a real model ID. |
+| `GEMINI_MODEL` | no | `gemini-3.5-flash-lite` | Any current model ID. |
 | `FRONTEND_URL` | no | `http://localhost:3000` | Comma-separated CORS allowlist of bare origins. |
 | `STORAGE_DRIVER` | no | `local` | `local`, `cloudinary`, or `datauri` — see below. |
 | `CLOUDINARY_*` | conditional | — | Required when `STORAGE_DRIVER=cloudinary`. |
@@ -315,7 +315,7 @@ Environment variables:
 | `JWT_SECRET` | 32+ random characters |
 | `NODE_ENV` | `production` |
 | `GEMINI_API_KEY` | your key, or omit to use fallback layouts |
-| `GEMINI_MODEL` | `gemini-2.5-flash` |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` |
 | `FRONTEND_URL` | `https://<your-app>.vercel.app` |
 | `PUBLIC_BASE_URL` | `https://<your-service>.onrender.com` |
 | `STORAGE_DRIVER` | `cloudinary` in production |
@@ -369,7 +369,7 @@ These all produce confusing symptoms, so they are worth checking first.
 | Template picker empty, poster creation 404s | Seed never ran against that database | `npm run seed` |
 | Templates visible but images broken | `local` driver; disk wiped on redeploy | Switch to `cloudinary` or `datauri` |
 | Data appears in a database named `test` | `MONGODB_URI` has no database name | Add `/poster_generator` |
-| AI layouts never used, everything looks generic | `GEMINI_MODEL` is not a real model ID | Use `gemini-2.5-flash` |
+| AI layouts never used, everything looks generic | `GEMINI_API_KEY` blank or wrong | Set a valid key |
 | Renders fail to load uploaded photos | `PUBLIC_BASE_URL` unset, so it points at `localhost` | Set it to the public origin |
 | 8 Gemini tests fail with `"fallback"` | `GEMINI_API_KEY` blank in `.env` | Use a non-empty placeholder |
 | Stack traces returned to clients | `NODE_ENV=development` in production | Set `production` |
