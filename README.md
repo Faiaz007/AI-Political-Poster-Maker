@@ -173,7 +173,7 @@ list of problems rather than failing later at the first request.
 | `NODE_ENV` | no | `production` | `development` also returns stack traces to clients. |
 | `JWT_EXPIRES_IN` | no | `7d` | Token lifetime. |
 | `GEMINI_API_KEY` | no | — | Enables AI layouts. Blank or unset → deterministic fallback. |
-| `GEMINI_MODEL` | no | `gemini-2.5-flash` | Must be a real model ID. |
+| `GEMINI_MODEL` | no | `gemini-3.5-flash-lite` | Must be a real model ID. |
 | `FRONTEND_URL` | no | `http://localhost:3000` | Comma-separated CORS allowlist of bare origins. |
 | `STORAGE_DRIVER` | no | `local` | `local`, `cloudinary`, or `datauri` — see below. |
 | `CLOUDINARY_*` | conditional | — | Required when `STORAGE_DRIVER=cloudinary`. |
