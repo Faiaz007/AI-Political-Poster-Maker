@@ -1,4 +1,6 @@
-FROM node:18-bookworm-slim
+# Node 22 satisfies the `engines.node >= 20` requirement in package.json; the
+# previous node:18 base contradicted it.
+FROM node:22-bookworm-slim
 
 # Install latest chrome dev package and fonts to support major charsets
 RUN apt-get update \

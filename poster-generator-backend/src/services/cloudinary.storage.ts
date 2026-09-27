@@ -40,8 +40,13 @@ export class CloudinaryStorageService implements StorageService {
   }): Promise<StoredAsset> {
     this.ensureConfigured();
     assertSupportedContentType(input.contentType);
+    const extension = extensionFor(input.contentType);
 
-    const key = buildSafeKey(input.folder ?? 'uploads', extensionFor(input.contentType));
+    // Cloudinary keeps the format as a separate attribute from the public_id
+    // and always appends it to the delivery URL. So the id handed to the API
+    // must NOT carry the extension, or the URL ends up as name.png.png.
+    const key = buildSafeKey(input.folder ?? 'uploads', extension);
+    const publicId = key.slice(0, -(extension.length + 1));
 
     try {
       // Cloudinary's typings only accept a path string; a data URI is the
@@ -49,10 +54,10 @@ export class CloudinaryStorageService implements StorageService {
       const dataUri = `data:${input.contentType};base64,${input.buffer.toString('base64')}`;
 
       const result = (await cloudinary.uploader.upload(dataUri, {
-        public_id: key,
+        public_id: publicId,
         resource_type: 'image',
-        // The original file type is preserved so posters stay lossless for print.
-        format: extensionFor(input.contentType),
+        // Supplying the original format keeps posters lossless for print.
+        format: extension,
         overwrite: false,
         colors: true,
       })) as UploadApiResponse;
@@ -61,7 +66,9 @@ export class CloudinaryStorageService implements StorageService {
 
       return {
         url: result.secure_url,
-        publicId: result.public_id,
+        // Returned with the extension so the stored id is self-describing and
+        // stays unique even if the same bytes are uploaded under two folders.
+        publicId: key,
         bytes: result.bytes,
         contentType: input.contentType,
       };

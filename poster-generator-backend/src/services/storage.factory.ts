@@ -1,5 +1,6 @@
 import { env } from '../config/env';
 import { CloudinaryStorageService } from './cloudinary.storage';
+import { DataUriStorageService } from './datauri.storage';
 import { LocalStorageService } from './local.storage';
 import type { StorageService } from './storage.service';
 
@@ -12,8 +13,16 @@ let instance: StorageService | null = null;
 export function getStorageService(): StorageService {
   if (instance) return instance;
 
-  instance =
-    env.STORAGE_DRIVER === 'cloudinary' ? new CloudinaryStorageService() : new LocalStorageService();
+  switch (env.STORAGE_DRIVER) {
+    case 'cloudinary':
+      instance = new CloudinaryStorageService();
+      break;
+    case 'datauri':
+      instance = new DataUriStorageService();
+      break;
+    default:
+      instance = new LocalStorageService();
+  }
 
   return instance;
 }

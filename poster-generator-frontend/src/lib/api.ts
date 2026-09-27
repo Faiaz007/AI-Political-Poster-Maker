@@ -24,7 +24,9 @@ export const API_BASE_URL =
  */
 export function assetUrl(path: string | null | undefined): string | null {
   if (!path) return null;
-  if (/^https?:\/\//i.test(path)) return path;
+  // `data:` is already self-contained. Without this branch the API origin would
+  // be glued onto the front of it and the browser would 404.
+  if (/^https?:\/\//i.test(path) || /^data:/i.test(path)) return path;
   return `${API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 }
 

@@ -19,6 +19,15 @@ const optionalTrimmedString = z
   .transform((value) => (value.length === 0 ? undefined : value))
   .optional();
 
+/**
+ * Env values pasted into a hosting dashboard's editor very often keep the
+ * trailing newline, and `z.enum` rejects `'cloudinary\n'` outright. Trimming
+ * first turns that class of paste mistake into a successful boot instead of a
+ * crash loop with an error that names the value but not the real cause.
+ */
+const trimmedEnum = <T extends readonly [string, ...string[]]>(values: T) =>
+  z.preprocess((value) => (typeof value === 'string' ? value.trim() : value), z.enum(values));
+
 const envSchema = z.object({
   // Defaults to 'production' so a deploy that forgets NODE_ENV fails closed:
   // the error handler only emits stack traces in development, and silently
@@ -70,7 +79,7 @@ const envSchema = z.object({
       return origins;
     }),
 
-  STORAGE_DRIVER: z.enum(['cloudinary', 'local']).default('local'),
+  STORAGE_DRIVER: trimmedEnum(['cloudinary', 'local', 'datauri']).default('local'),
   LOCAL_STORAGE_DIR: z.string().default('uploads'),
 
   /**
