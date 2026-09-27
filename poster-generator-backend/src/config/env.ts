@@ -42,7 +42,7 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().default('7d'),
 
   GEMINI_API_KEY: optionalTrimmedString,
-  GEMINI_MODEL: z.string().default('gemini-2.5-flash'),
+  GEMINI_MODEL: z.string().default('gemini-3.5-flash-lite'),
 
   CLOUDINARY_CLOUD_NAME: optionalTrimmedString,
   CLOUDINARY_API_KEY: optionalTrimmedString,

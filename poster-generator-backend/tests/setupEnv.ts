@@ -11,7 +11,7 @@ process.env.NODE_ENV = 'test';
 process.env.MONGODB_URI = process.env.TEST_MONGODB_URI ?? 'mongodb://127.0.0.1:27017/poster_generator_test';
 process.env.JWT_SECRET = 'test_secret_key_at_least_32_characters_long_abc';
 process.env.JWT_EXPIRES_IN = '7d';
-process.env.GEMINI_MODEL = 'gemini-2.5-flash';
+  process.env.GEMINI_MODEL = 'gemini-3.5-flash-lite';
 // Intentionally left unset so the Gemini layer exercises its fallback path.
 delete process.env.GEMINI_API_KEY;
 process.env.FRONTEND_URL = 'http://localhost:3000';
